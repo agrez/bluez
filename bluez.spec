@@ -18,6 +18,8 @@ Patch2: 0001-Allow-using-obexd-without-systemd-in-the-user-sessio.patch
 Patch3: 0001-obex-Use-GLib-helper-function-to-manipulate-paths.patch
 Patch4: 0002-autopair-Don-t-handle-the-iCade.patch
 Patch5: 0004-agent-Assert-possible-infinite-loop.patch
+Patch10: 0010-sleep-before-reset.patch
+Patch11: 0011-define_correct_firmware_dir.patch
 
 BuildRequires: git
 BuildRequires: dbus-devel >= 1.6
@@ -240,8 +242,8 @@ mkdir -p $RPM_BUILD_ROOT/%{_libdir}/bluetooth/
 %{_userunitdir}/obex.service
 
 %changelog
-* Fri Apr 15 2016 David Tardon <dtardon@redhat.com> - 5.39-2
-- rebuild for ICU 57.1
+* Wed May 18 2016 Vaughan <devel at agrez dot net> 5.39-2
+- Add sleep-before-reset & define_correct_firmware_dir patches
 
 * Tue Apr 12 2016 Peter Robinson <pbrobinson@fedoraproject.org> 5.39-1
 - Update to 5.39 bugfix relesae
@@ -249,20 +251,8 @@ mkdir -p $RPM_BUILD_ROOT/%{_libdir}/bluetooth/
 * Sun Apr  3 2016 Peter Robinson <pbrobinson@fedoraproject.org> 5.38-1
 - Update to 5.38
 
-* Wed Feb 03 2016 Fedora Release Engineering <releng@fedoraproject.org> - 5.37-3
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
-
-* Mon Jan 18 2016 David Tardon <dtardon@redhat.com> - 5.37-2
-- rebuild for libical 2.0.0
-
-* Tue Dec 29 2015 Peter Robinson <pbrobinson@fedoraproject.org> 5.37-1
-- Update to 5.37
-
 * Fri Nov 13 2015 Peter Robinson <pbrobinson@fedoraproject.org> 5.36-1
 - Update to 5.36
-
-* Fri Oct 30 2015 Peter Robinson <pbrobinson@fedoraproject.org> 5.35-2
-- Split obexd out into a sub package
 
 * Mon Oct  5 2015 Peter Robinson <pbrobinson@fedoraproject.org> 5.35-1
 - Update to 5.35
