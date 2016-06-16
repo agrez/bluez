@@ -2,8 +2,8 @@
 
 Name:    bluez
 Summary: Bluetooth utilities
-Version: 5.39
-Release: 2%{?dist}
+Version: 5.40
+Release: 1%{?dist}
 License: GPLv2+
 Group: Applications/System
 URL: http://www.bluez.org/
@@ -242,6 +242,9 @@ mkdir -p $RPM_BUILD_ROOT/%{_libdir}/bluetooth/
 %{_userunitdir}/obex.service
 
 %changelog
+* Thu Jun 16 2016 Vaughan <devel at agrez dot net> 5.40-1
+- New release
+
 * Wed May 18 2016 Vaughan <devel at agrez dot net> 5.39-2
 - Add sleep-before-reset & define_correct_firmware_dir patches
 
