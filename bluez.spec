@@ -2,7 +2,7 @@
 
 Name:    bluez
 Summary: Bluetooth utilities
-Version: 5.40
+Version: 5.41
 Release: 1%{?dist}
 License: GPLv2+
 Group: Applications/System
@@ -242,6 +242,9 @@ mkdir -p $RPM_BUILD_ROOT/%{_libdir}/bluetooth/
 %{_userunitdir}/obex.service
 
 %changelog
+* Mon Aug 29 2016 Vaughan <devel at agrez dot net> 5.41-1
+- New release
+
 * Thu Jun 16 2016 Vaughan <devel at agrez dot net> 5.40-1
 - New release
 
