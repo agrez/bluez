@@ -3,7 +3,7 @@
 Name:    bluez
 Summary: Bluetooth utilities
 Version: 5.41
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv2+
 Group: Applications/System
 URL: http://www.bluez.org/
@@ -18,6 +18,7 @@ Patch2: 0001-Allow-using-obexd-without-systemd-in-the-user-sessio.patch
 Patch3: 0001-obex-Use-GLib-helper-function-to-manipulate-paths.patch
 Patch4: 0002-autopair-Don-t-handle-the-iCade.patch
 Patch5: 0004-agent-Assert-possible-infinite-loop.patch
+# RPi3 support pathces
 Patch10: 0010-sleep-before-reset.patch
 Patch11: 0011-define_correct_firmware_dir.patch
 
@@ -161,6 +162,11 @@ install -d -m0755 $RPM_BUILD_ROOT/%{_localstatedir}/lib/bluetooth
 
 mkdir -p $RPM_BUILD_ROOT/%{_libdir}/bluetooth/
 
+#copy bluetooth config file and setup auto enable
+install -D -p -m0644 src/main.conf ${RPM_BUILD_ROOT}/etc/bluetooth/main.conf
+sed -i 's/#\[Policy\]$/\[Policy\]/; s/#AutoEnable=false/AutoEnable=true/' ${RPM_BUILD_ROOT}/%{_sysconfdir}/bluetooth/main.conf
+
+
 %post libs -p /sbin/ldconfig
 
 %postun libs -p /sbin/ldconfig
@@ -216,6 +222,7 @@ mkdir -p $RPM_BUILD_ROOT/%{_libdir}/bluetooth/
 %{_localstatedir}/lib/bluetooth
 %{_datadir}/dbus-1/system-services/org.bluez.service
 %{_unitdir}/bluetooth.service
+%config %{_sysconfdir}/bluetooth/main.conf
 
 %files libs
 %{!?_licensedir:%global license %%doc}
@@ -242,6 +249,11 @@ mkdir -p $RPM_BUILD_ROOT/%{_libdir}/bluetooth/
 %{_userunitdir}/obex.service
 
 %changelog
+* Tue Aug 30 2016 Vaughan <devel at agrez dot net> 5.41-2
+- Sync with Fedora upstream changes:
+  * add /etc/bluetooth/main.conf config file
+  * set 'AutoEnable=true' in /etc/bluetooth/main.conf file
+
 * Mon Aug 29 2016 Vaughan <devel at agrez dot net> 5.41-1
 - New release
 
