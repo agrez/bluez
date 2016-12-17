@@ -2,8 +2,8 @@
 
 Name:    bluez
 Summary: Bluetooth utilities
-Version: 5.41
-Release: 2%{?dist}
+Version: 5.43
+Release: 1%{?dist}
 License: GPLv2+
 Group: Applications/System
 URL: http://www.bluez.org/
@@ -249,6 +249,9 @@ sed -i 's/#\[Policy\]$/\[Policy\]/; s/#AutoEnable=false/AutoEnable=true/' ${RPM_
 %{_userunitdir}/obex.service
 
 %changelog
+* Sat Dec 17 2016 Vaughan <devel at agrez dot net> 5.43-1
+- New release
+
 * Tue Aug 30 2016 Vaughan <devel at agrez dot net> 5.41-2
 - Sync with Fedora upstream changes:
   * add /etc/bluetooth/main.conf config file
