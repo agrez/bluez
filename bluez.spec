@@ -2,7 +2,7 @@
 
 Name:    bluez
 Summary: Bluetooth utilities
-Version: 5.43
+Version: 5.44
 Release: 1%{?dist}
 License: GPLv2+
 Group: Applications/System
@@ -22,7 +22,7 @@ Patch5: 0004-agent-Assert-possible-infinite-loop.patch
 Patch10: 0010-sleep-before-reset.patch
 Patch11: 0011-define_correct_firmware_dir.patch
 
-BuildRequires: git
+BuildRequires: git-core
 BuildRequires: dbus-devel >= 1.6
 BuildRequires: glib2-devel
 BuildRequires: libical-devel
@@ -132,7 +132,7 @@ git am -p1 %{patches} < /dev/null
 
 %build
 %configure --enable-cups --enable-tools --enable-library \
-           --enable-sixaxis \
+           --enable-sixaxis --enable-deprecated \
            --with-systemdsystemunitdir=%{_unitdir} \
            --with-systemduserunitdir=%{_userunitdir}
 
@@ -156,7 +156,7 @@ if test -d ${RPM_BUILD_ROOT}/usr/lib64/cups ; then
 fi
 
 rm -f ${RPM_BUILD_ROOT}/%{_sysconfdir}/udev/*.rules ${RPM_BUILD_ROOT}/usr/lib/udev/rules.d/*.rules
-install -D -p -m0644 tools/hid2hci.rules ${RPM_BUILD_ROOT}/lib/udev/rules.d/97-hid2hci.rules
+install -D -p -m0644 tools/hid2hci.rules ${RPM_BUILD_ROOT}/%{_udevrulesdir}/97-hid2hci.rules
 
 install -d -m0755 $RPM_BUILD_ROOT/%{_localstatedir}/lib/bluetooth
 
@@ -165,7 +165,6 @@ mkdir -p $RPM_BUILD_ROOT/%{_libdir}/bluetooth/
 #copy bluetooth config file and setup auto enable
 install -D -p -m0644 src/main.conf ${RPM_BUILD_ROOT}/etc/bluetooth/main.conf
 sed -i 's/#\[Policy\]$/\[Policy\]/; s/#AutoEnable=false/AutoEnable=true/' ${RPM_BUILD_ROOT}/%{_sysconfdir}/bluetooth/main.conf
-
 
 %post libs -p /sbin/ldconfig
 
@@ -183,10 +182,19 @@ sed -i 's/#\[Policy\]$/\[Policy\]/; s/#AutoEnable=false/AutoEnable=true/' ${RPM_
 %post hid2hci
 /sbin/udevadm trigger --subsystem-match=usb
 
+%post obexd
+%systemd_user_post obex.service
+
+%preun obexd
+%systemd_user_preun obex.service
+
 %files
 %{!?_licensedir:%global license %%doc}
 %license COPYING
 %doc AUTHORS ChangeLog
+%config %{_sysconfdir}/dbus-1/system.d/bluetooth.conf
+%config %{_sysconfdir}/bluetooth/main.conf
+%{_bindir}/btattach
 %{_bindir}/ciptool
 %{_bindir}/hcitool
 %{_bindir}/l2ping
@@ -204,6 +212,7 @@ sed -i 's/#\[Policy\]$/\[Policy\]/; s/#AutoEnable=false/AutoEnable=true/' ${RPM_
 %{_bindir}/mpris-proxy
 %{_bindir}/gatttool
 %{_bindir}/rctest
+%{_mandir}/man1/btattach.1.gz
 %{_mandir}/man1/ciptool.1.gz
 %{_mandir}/man1/hcitool.1.gz
 %{_mandir}/man1/rfcomm.1.gz
@@ -216,13 +225,10 @@ sed -i 's/#\[Policy\]$/\[Policy\]/; s/#AutoEnable=false/AutoEnable=true/' ${RPM_
 %{_mandir}/man1/rctest.1.*
 %{_mandir}/man8/*
 %{_libexecdir}/bluetooth/bluetoothd
-%exclude %{_mandir}/man1/hid2hci.1*
-%config %{_sysconfdir}/dbus-1/system.d/bluetooth.conf
 %{_libdir}/bluetooth/
 %{_localstatedir}/lib/bluetooth
 %{_datadir}/dbus-1/system-services/org.bluez.service
 %{_unitdir}/bluetooth.service
-%config %{_sysconfdir}/bluetooth/main.conf
 
 %files libs
 %{!?_licensedir:%global license %%doc}
@@ -231,8 +237,7 @@ sed -i 's/#\[Policy\]$/\[Policy\]/; s/#AutoEnable=false/AutoEnable=true/' ${RPM_
 
 %files libs-devel
 %{_libdir}/libbluetooth.so
-%dir %{_includedir}/bluetooth
-%{_includedir}/bluetooth/*
+%{_includedir}/bluetooth
 %{_libdir}/pkgconfig/bluez.pc
 
 %files cups
@@ -241,7 +246,7 @@ sed -i 's/#\[Policy\]$/\[Policy\]/; s/#AutoEnable=false/AutoEnable=true/' ${RPM_
 %files hid2hci
 /usr/lib/udev/hid2hci
 %{_mandir}/man1/hid2hci.1*
-/lib/udev/rules.d/97-hid2hci.rules
+%{_udevrulesdir}/97-hid2hci.rules
 
 %files obexd
 %{_libexecdir}/bluetooth/obexd
@@ -249,6 +254,13 @@ sed -i 's/#\[Policy\]$/\[Policy\]/; s/#AutoEnable=false/AutoEnable=true/' ${RPM_
 %{_userunitdir}/obex.service
 
 %changelog
+* Sat Apr 01 2017 Vaughan <devel at agrez dot net> 5.44-1
+- New release
+- Merge upstream Fedora changes:
+  * Enable deprecated option to keep all usual tools
+  * Ship btattach tool
+  * Minor spec cleanups
+
 * Sat Dec 17 2016 Vaughan <devel at agrez dot net> 5.43-1
 - New release
 
