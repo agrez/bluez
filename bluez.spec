@@ -1,11 +1,8 @@
-%global _hardened_build 1
-
 Name:    bluez
 Summary: Bluetooth utilities
-Version: 5.44
+Version: 5.45
 Release: 1%{?dist}
 License: GPLv2+
-Group: Applications/System
 URL: http://www.bluez.org/
 
 Source0: http://www.kernel.org/pub/linux/bluetooth/bluez-%{version}.tar.xz
@@ -61,27 +58,22 @@ The BLUETOOTH trademarks are owned by Bluetooth SIG, Inc., U.S.A.
 
 %package libs
 Summary: Libraries for use in Bluetooth applications
-Group: System Environment/Libraries
 
 %package libs-devel
 Summary: Development libraries for Bluetooth applications
-Group: Development/Libraries
 Requires: bluez-libs%{?_isa} = %{version}-%{release}
 
 %package cups
 Summary: CUPS printer backend for Bluetooth printers
-Group: System Environment/Daemons
 Requires: bluez%{?_isa} = %{version}-%{release}
 Requires: cups
 
 %package hid2hci
 Summary: Put HID proxying bluetooth HCI's into HCI mode
-Group: System Environment/Daemons
 Requires: bluez%{?_isa} = %{version}-%{release}
 
 %package obexd
 Summary: Object Exchange daemon for sharing content
-Group: System Environment/Daemons
 Requires: bluez%{?_isa} = %{version}-%{release}
 Requires: bluez-libs%{?_isa} = %{version}-%{release}
 
@@ -131,8 +123,8 @@ git commit -a -q -m "%{version} baseline."
 git am -p1 %{patches} < /dev/null
 
 %build
-%configure --enable-cups --enable-tools --enable-library \
-           --enable-sixaxis --enable-deprecated \
+%configure --enable-tools --enable-library --enable-deprecated \
+           --enable-sixaxis --enable-cups --enable-nfc \
            --with-systemdsystemunitdir=%{_unitdir} \
            --with-systemduserunitdir=%{_userunitdir}
 
@@ -236,6 +228,7 @@ sed -i 's/#\[Policy\]$/\[Policy\]/; s/#AutoEnable=false/AutoEnable=true/' ${RPM_
 %{_libdir}/libbluetooth.so.*
 
 %files libs-devel
+%doc doc/*txt
 %{_libdir}/libbluetooth.so
 %{_includedir}/bluetooth
 %{_libdir}/pkgconfig/bluez.pc
@@ -254,6 +247,12 @@ sed -i 's/#\[Policy\]$/\[Policy\]/; s/#AutoEnable=false/AutoEnable=true/' ${RPM_
 %{_userunitdir}/obex.service
 
 %changelog
+* Wed Jul 12 2017 Vaughan <devel at agrez dot net> 5.45-1
+- New release
+- Sync with upstream Fedora changes:
+  * Enable configure switch --enable-nfc
+  * Misc spec file cleanups
+
 * Sat Apr 01 2017 Vaughan <devel at agrez dot net> 5.44-1
 - New release
 - Merge upstream Fedora changes:
