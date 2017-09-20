@@ -8,13 +8,11 @@ URL: http://www.bluez.org/
 Source0: http://www.kernel.org/pub/linux/bluetooth/bluez-%{version}.tar.xz
 Source1: bluez.gitignore
 
-## Ubuntu patches
-Patch1: 0001-work-around-Logitech-diNovo-Edge-keyboard-firmware-i.patch
-# Non-upstream
-Patch2: 0001-Allow-using-obexd-without-systemd-in-the-user-sessio.patch
-Patch3: 0001-obex-Use-GLib-helper-function-to-manipulate-paths.patch
-Patch4: 0002-autopair-Don-t-handle-the-iCade.patch
-Patch5: 0004-agent-Assert-possible-infinite-loop.patch
+Patch1: 0001-obex-Use-GLib-helper-function-to-manipulate-paths.patch
+Patch2: 0002-autopair-Don-t-handle-the-iCade.patch
+Patch3: 0010-Out-of-bounds-heap-read-in-service_search_attr_req-f.patch
+
+
 # RPi3 support pathces
 Patch10: 0010-sleep-before-reset.patch
 Patch11: 0011-define_correct_firmware_dir.patch
