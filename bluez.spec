@@ -1,7 +1,7 @@
 Name:    bluez
 Summary: Bluetooth utilities
 Version: 5.46
-Release: 2%{?dist}
+Release: 7%{?dist}
 License: GPLv2+
 URL: http://www.bluez.org/
 
@@ -235,6 +235,13 @@ sed -i 's/#\[Policy\]$/\[Policy\]/; s/#AutoEnable=false/AutoEnable=true/' ${RPM_
 %{_userunitdir}/obex.service
 
 %changelog
+* Wed Sep 20 2017 Vaughan <devel at agrez dot net> 5.46-7
+- Sync with upstream Fedora 26 changes:
+  * Use autosetup
+  * Drop uneeded patches
+  * Add fixes for sdpd heap (Patch3)
+- Bump release
+
 * Mon Jul 24 2017 Vaughan <devel at agrez dot net> 5.46-2
 - New release
 - Bump release
