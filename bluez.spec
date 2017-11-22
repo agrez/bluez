@@ -10,7 +10,6 @@ Source1: bluez.gitignore
 
 Patch1: 0001-obex-Use-GLib-helper-function-to-manipulate-paths.patch
 Patch2: 0002-autopair-Don-t-handle-the-iCade.patch
-Patch3: 0010-Out-of-bounds-heap-read-in-service_search_attr_req-f.patch
 
 
 # RPi3 support pathces
