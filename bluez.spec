@@ -1,16 +1,27 @@
 Name:    bluez
 Summary: Bluetooth utilities
-Release: 7%{?dist}
 Version: 5.47
+Release: 3%{?dist}
 License: GPLv2+
 URL: http://www.bluez.org/
 
 Source0: http://www.kernel.org/pub/linux/bluetooth/bluez-%{version}.tar.xz
 Source1: bluez.gitignore
 
-Patch1: 0001-obex-Use-GLib-helper-function-to-manipulate-paths.patch
-Patch2: 0002-autopair-Don-t-handle-the-iCade.patch
+# https://github.com/hadess/bluez/commits/build-fixes-5.46
+Patch0: 0001-build-Enable-BIND_NOW.patch
+Patch1: 0002-obexd-Fix-compilation-error-on-F27.patch
+Patch2: 0003-tools-csr_usb-Fix-compilation-failure.patch
+Patch3: 0004-obex-Work-around-compilation-failure.patch
 
+# https://github.com/hadess/bluez/commits/obex-5.46
+Patch4: 0001-obex-Use-GLib-helper-function-to-manipulate-paths.patch
+
+# https://github.com/hadess/bluez/commits/autopair-5.46
+Patch5: 0001-autopair-Don-t-handle-the-iCade.patch
+
+# https://github.com/hadess/bluez/commits/hostname-plugin-5.47
+Patch6: 0001-hostname-Fix-BlueZ-5.XX-adapter-name-on-startup.patch
 
 # RPi3 support pathces
 Patch10: 0010-sleep-before-reset.patch
@@ -21,6 +32,8 @@ BuildRequires: dbus-devel >= 1.6
 BuildRequires: glib2-devel
 BuildRequires: libical-devel
 BuildRequires: readline-devel
+# For bluetooth mesh
+BuildRequires: json-c-devel
 # For cable pairing
 BuildRequires: systemd-devel
 # For cups
@@ -111,7 +124,7 @@ Object Exchange daemon for sharing files, contacts etc over bluetooth
 
 %build
 %configure --enable-tools --enable-library --enable-deprecated \
-           --enable-sixaxis --enable-cups --enable-nfc \
+           --enable-sixaxis --enable-cups --enable-nfc --enable-mesh \
            --with-systemdsystemunitdir=%{_unitdir} \
            --with-systemduserunitdir=%{_userunitdir}
 
@@ -188,6 +201,7 @@ sed -i 's/#\[Policy\]$/\[Policy\]/; s/#AutoEnable=false/AutoEnable=true/' ${RPM_
 %{_bindir}/hcidump
 %{_bindir}/l2test
 %{_bindir}/hex2hcd
+%{_bindir}/meshctl
 %{_bindir}/mpris-proxy
 %{_bindir}/gatttool
 %{_bindir}/rctest
@@ -234,6 +248,15 @@ sed -i 's/#\[Policy\]$/\[Policy\]/; s/#AutoEnable=false/AutoEnable=true/' ${RPM_
 %{_userunitdir}/obex.service
 
 %changelog
+* Wed Nov 22 2017 Vaughan <devel at agrez dot net> 5.47-3
+- New release
+- Drop patch3
+- Sync with upstream Fedora 27 changes:
+  * Add various f27 build fixes
+  * Initial support for Bluetooth LE mesh
+  * Fix adapter name not picking up PrettyHostname
+- Bump release
+
 * Wed Sep 20 2017 Vaughan <devel at agrez dot net> 5.46-7
 - Sync with upstream Fedora 26 changes:
   * Use autosetup
