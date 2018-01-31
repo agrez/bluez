@@ -10,15 +10,11 @@ Source1: bluez.gitignore
 
 # https://github.com/hadess/bluez/commits/build-fixes-5.46
 Patch0: 0001-build-Enable-BIND_NOW.patch
-Patch1: 0002-obexd-Fix-compilation-error-on-F27.patch
 Patch2: 0003-tools-csr_usb-Fix-compilation-failure.patch
 Patch3: 0004-obex-Work-around-compilation-failure.patch
 
 # https://github.com/hadess/bluez/commits/obex-5.46
 Patch4: 0001-obex-Use-GLib-helper-function-to-manipulate-paths.patch
-
-# https://github.com/hadess/bluez/commits/autopair-5.46
-Patch5: 0001-autopair-Don-t-handle-the-iCade.patch
 
 # https://github.com/hadess/bluez/commits/hostname-plugin-5.47
 Patch6: 0001-hostname-Fix-BlueZ-5.XX-adapter-name-on-startup.patch
