@@ -1,7 +1,7 @@
 Name:    bluez
 Summary: Bluetooth utilities
-Version: 5.47
-Release: 3%{?dist}
+Version: 5.48
+Release: 2%{?dist}
 License: GPLv2+
 URL: http://www.bluez.org/
 
@@ -244,6 +244,11 @@ sed -i 's/#\[Policy\]$/\[Policy\]/; s/#AutoEnable=false/AutoEnable=true/' ${RPM_
 %{_userunitdir}/obex.service
 
 %changelog
+* Wed Jan 31 2018 Vaughan <devel at agrez dot net> 5.48-2
+- New release
+- Drop patches 001 & 002
+- Bump release
+
 * Wed Nov 22 2017 Vaughan <devel at agrez dot net> 5.47-3
 - New release
 - Drop patch3
