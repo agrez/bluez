@@ -1,7 +1,7 @@
 Name:    bluez
 Summary: Bluetooth utilities
 Version: 5.48
-Release: 2%{?dist}
+Release: 4%{?dist}
 License: GPLv2+
 URL: http://www.bluez.org/
 
@@ -28,6 +28,7 @@ Patch120: 0001-build-Always-define-confdir-and-statedir.patch
 Patch121: 0002-systemd-Add-PrivateTmp-and-NoNewPrivileges-options.patch
 Patch122: 0003-systemd-Add-more-filesystem-lockdown.patch
 Patch123: 0004-systemd-More-lockdown.patch
+
 BuildRequires: git-core
 BuildRequires: dbus-devel >= 1.6
 BuildRequires: glib2-devel
@@ -253,6 +254,12 @@ sed -i 's/#\[Policy\]$/\[Policy\]/; s/#AutoEnable=false/AutoEnable=true/' ${RPM_
 %{_userunitdir}/obex.service
 
 %changelog
+* Sat Mar 03 2018 Vaughan <devel at agrez dot net> 5.48-4
+- Sync with upstream Fedora 27 changes:
+  * Fix invalid paths in service file (#1546182)
+  * Re-add systemd hardening patches, they're still not upstream
+- Bump release
+
 * Wed Jan 31 2018 Vaughan <devel at agrez dot net> 5.48-2
 - New release
 - Drop patches 001 & 002
