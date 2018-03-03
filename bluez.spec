@@ -23,6 +23,11 @@ Patch6: 0001-hostname-Fix-BlueZ-5.XX-adapter-name-on-startup.patch
 Patch10: 0010-sleep-before-reset.patch
 Patch11: 0011-define_correct_firmware_dir.patch
 
+# https://github.com/hadess/bluez/commits/systemd-hardening
+Patch120: 0001-build-Always-define-confdir-and-statedir.patch
+Patch121: 0002-systemd-Add-PrivateTmp-and-NoNewPrivileges-options.patch
+Patch122: 0003-systemd-Add-more-filesystem-lockdown.patch
+Patch123: 0004-systemd-More-lockdown.patch
 BuildRequires: git-core
 BuildRequires: dbus-devel >= 1.6
 BuildRequires: glib2-devel
