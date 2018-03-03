@@ -39,6 +39,8 @@ BuildRequires: json-c-devel
 BuildRequires: systemd-devel
 # For cups
 BuildRequires: cups-devel
+# For autoreconf
+BuildRequires: libtool automake autoconf
 
 Requires: dbus >= 1.6
 
@@ -124,6 +126,8 @@ Object Exchange daemon for sharing files, contacts etc over bluetooth
 %autosetup -S git
 
 %build
+libtoolize -f -i
+autoreconf -f -i
 %configure --enable-tools --enable-library --enable-deprecated \
            --enable-sixaxis --enable-cups --enable-nfc --enable-mesh \
            --with-systemdsystemunitdir=%{_unitdir} \
