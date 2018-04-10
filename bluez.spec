@@ -9,25 +9,24 @@ Source0: http://www.kernel.org/pub/linux/bluetooth/bluez-%{version}.tar.xz
 Source1: bluez.gitignore
 
 # https://github.com/hadess/bluez/commits/build-fixes-5.46
-Patch0: 0001-build-Enable-BIND_NOW.patch
+Patch1: 0001-build-Enable-BIND_NOW.patch
 Patch2: 0003-tools-csr_usb-Fix-compilation-failure.patch
-Patch3: 0004-obex-Work-around-compilation-failure.patch
 
 # https://github.com/hadess/bluez/commits/obex-5.46
-Patch4: 0001-obex-Use-GLib-helper-function-to-manipulate-paths.patch
+Patch3: 0001-obex-Use-GLib-helper-function-to-manipulate-paths.patch
 
 # https://github.com/hadess/bluez/commits/hostname-plugin-5.47
-Patch6: 0001-hostname-Fix-BlueZ-5.XX-adapter-name-on-startup.patch
+Patch4: 0001-hostname-Fix-BlueZ-5.XX-adapter-name-on-startup.patch
 
 # RPi3 support pathces
 Patch10: 0010-sleep-before-reset.patch
 Patch11: 0011-define_correct_firmware_dir.patch
 
 # https://github.com/hadess/bluez/commits/systemd-hardening
-Patch120: 0001-build-Always-define-confdir-and-statedir.patch
-Patch121: 0002-systemd-Add-PrivateTmp-and-NoNewPrivileges-options.patch
-Patch122: 0003-systemd-Add-more-filesystem-lockdown.patch
-Patch123: 0004-systemd-More-lockdown.patch
+Patch20: 0001-build-Always-define-confdir-and-statedir.patch
+Patch21: 0002-systemd-Add-PrivateTmp-and-NoNewPrivileges-options.patch
+Patch22: 0003-systemd-Add-more-filesystem-lockdown.patch
+Patch23: 0004-systemd-More-lockdown.patch
 
 BuildRequires: git-core
 BuildRequires: dbus-devel >= 1.6
