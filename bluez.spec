@@ -1,7 +1,7 @@
 Name:    bluez
 Summary: Bluetooth utilities
-Version: 5.48
-Release: 4%{?dist}
+Version: 5.49
+Release: 2%{?dist}
 License: GPLv2+
 URL: http://www.bluez.org/
 
@@ -253,6 +253,11 @@ sed -i 's/#\[Policy\]$/\[Policy\]/; s/#AutoEnable=false/AutoEnable=true/' ${RPM_
 %{_userunitdir}/obex.service
 
 %changelog
+* Tue Apr 10 2018 Vaughan <devel at agrez dot net> 5.49-2
+- New release
+- Drop Patch3
+- Bump release
+
 * Sat Mar 03 2018 Vaughan <devel at agrez dot net> 5.48-4
 - Sync with upstream Fedora 27 changes:
   * Fix invalid paths in service file (#1546182)
