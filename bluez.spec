@@ -1,7 +1,7 @@
 Name:    bluez
 Summary: Bluetooth utilities
 Version: 5.49
-Release: 2%{?dist}
+Release: 4%{?dist}
 License: GPLv2+
 URL: http://www.bluez.org/
 
@@ -27,6 +27,9 @@ Patch20: 0001-build-Always-define-confdir-and-statedir.patch
 Patch21: 0002-systemd-Add-PrivateTmp-and-NoNewPrivileges-options.patch
 Patch22: 0003-systemd-Add-more-filesystem-lockdown.patch
 Patch23: 0004-systemd-More-lockdown.patch
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=1567622
+Patch24: 0001-adapter-Don-t-refresh-adv_manager-for-non-LE-devices.patch
 
 BuildRequires: git-core
 BuildRequires: dbus-devel >= 1.6
@@ -253,6 +256,11 @@ sed -i 's/#\[Policy\]$/\[Policy\]/; s/#AutoEnable=false/AutoEnable=true/' ${RPM_
 %{_userunitdir}/obex.service
 
 %changelog
+* Tue May 01 2018 Vaughan <devel at agrez dot net> 5.49-4
+- Sync with upstream Fedora 27 changes:
+  * Fix crash on non-LE adapters (#1567622)
+- Bump release
+
 * Tue Apr 10 2018 Vaughan <devel at agrez dot net> 5.49-2
 - New release
 - Drop Patch3
