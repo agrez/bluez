@@ -1,7 +1,7 @@
 Name:    bluez
 Summary: Bluetooth utilities
-Version: 5.49
-Release: 4%{?dist}
+Version: 5.50
+Release: 2%{?dist}
 License: GPLv2+
 URL: http://www.bluez.org/
 
@@ -30,11 +30,12 @@ BuildRequires: dbus-devel >= 1.6
 BuildRequires: glib2-devel
 BuildRequires: libical-devel
 BuildRequires: readline-devel
+BuildRequires: libell-devel
 # For bluetooth mesh
 BuildRequires: json-c-devel
 # For cable pairing
 BuildRequires: systemd-devel
-# For cups
+# For printing
 BuildRequires: cups-devel
 # For autoreconf
 BuildRequires: libtool automake autoconf
@@ -123,7 +124,7 @@ Object Exchange daemon for sharing files, contacts etc over bluetooth
 %autosetup -S git
 
 %build
-libtoolize -f -i
+libtoolize -f
 autoreconf -f -i
 %configure --enable-tools --enable-library --enable-deprecated \
            --enable-sixaxis --enable-cups --enable-nfc --enable-mesh \
@@ -160,9 +161,8 @@ mkdir -p $RPM_BUILD_ROOT/%{_libdir}/bluetooth/
 install -D -p -m0644 src/main.conf ${RPM_BUILD_ROOT}/etc/bluetooth/main.conf
 sed -i 's/#\[Policy\]$/\[Policy\]/; s/#AutoEnable=false/AutoEnable=true/' ${RPM_BUILD_ROOT}/%{_sysconfdir}/bluetooth/main.conf
 
-%post libs -p /sbin/ldconfig
 
-%postun libs -p /sbin/ldconfig
+%ldconfig_scriptlets libs
 
 %post
 %systemd_post bluetooth.service
@@ -249,7 +249,13 @@ sed -i 's/#\[Policy\]$/\[Policy\]/; s/#AutoEnable=false/AutoEnable=true/' ${RPM_
 %{_datadir}/dbus-1/services/org.bluez.obex.service
 %{_userunitdir}/obex.service
 
+
 %changelog
+* Tue Jun 26 2018 Vaughan <devel at agrez dot net> 5.50-2
+- New release
+- Add %%ldconfig_scriptlets libs macro
+- Bump release
+
 * Tue May 01 2018 Vaughan <devel at agrez dot net> 5.49-4
 - Sync with upstream Fedora 27 changes:
   * Fix crash on non-LE adapters (#1567622)
