@@ -15,9 +15,6 @@ Patch2: 0003-tools-csr_usb-Fix-compilation-failure.patch
 # https://github.com/hadess/bluez/commits/obex-5.46
 Patch3: 0001-obex-Use-GLib-helper-function-to-manipulate-paths.patch
 
-# https://github.com/hadess/bluez/commits/hostname-plugin-5.47
-Patch4: 0001-hostname-Fix-BlueZ-5.XX-adapter-name-on-startup.patch
-
 # RPi3 support pathces
 Patch10: 0010-sleep-before-reset.patch
 Patch11: 0011-define_correct_firmware_dir.patch
@@ -27,9 +24,6 @@ Patch20: 0001-build-Always-define-confdir-and-statedir.patch
 Patch21: 0002-systemd-Add-PrivateTmp-and-NoNewPrivileges-options.patch
 Patch22: 0003-systemd-Add-more-filesystem-lockdown.patch
 Patch23: 0004-systemd-More-lockdown.patch
-
-# https://bugzilla.redhat.com/show_bug.cgi?id=1567622
-Patch24: 0001-adapter-Don-t-refresh-adv_manager-for-non-LE-devices.patch
 
 BuildRequires: git-core
 BuildRequires: dbus-devel >= 1.6
